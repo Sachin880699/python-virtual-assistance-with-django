@@ -1,0 +1,13 @@
+Hello
+<script>
+let voices, utterance;
+
+function speakVoice() {
+voices = this.getVoices();
+utterance = new SpeechSynthesisUtterance("Hello World");
+utterance.voice = voices[1];
+speechSynthesis.speak(utterance);
+};
+
+speechSynthesis.addEventListener('voiceschanged', speakVoice);
+</script>

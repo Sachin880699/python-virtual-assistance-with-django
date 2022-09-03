@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    /*
+TODO:
+-
+-
+-
+-
+
+*/
+/* variables  */
+:root{
+    --primary-color: #273c75;
+}
+.theme{
+    --primary-color: #0097e6;
+}
+*,
+*::after,
+*::before {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    font-size: 16px;
+    font-family: poppins;
+    background: var(--primary-color);
+    flex-wrap: wrap;
+    transition: all 0.4s ease;
+}
+.text-muted{
+    color: #555;
+}
+.wrapper{
+    width: 400px;
+    height: auto;
+    background: #fff;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+#microphone{
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#microphone.pulse {
+    background: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 0 0 rgba(40, 61, 119, 0.411);
+    animation: pulse 2s infinite;
+  }
+  #microphone.pulse:hover {
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(40, 61, 119, 0.411);
+    }
+    70% {
+        box-shadow: 0 0 0 20px rgba(40, 61, 119, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 61, 119, 0);
+    }
+  }
+.display-conversation{
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.display-conversation p{
+    font-size: .9rem;
+}
+#question-btn{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    font-size: 1rem;
+    left: 10px;
+    top: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--primary-color);
+    color: #fff;
+}
+#question-btn:hover{
+    background: transparent;
+    color: var(--primary-color);
+}
+
+.command-area{
+    display: block;
+    width: 100%;
+    background: #fff;
+    padding: 1rem;
+    height: auto;
+    display: block;
+    position: absolute;
+    overflow-y: scroll;
+    text-align: left;
+    top: 0%;
+    left: 100%;
+    right: 0%;
+    transition: all 0.6s ease;
+    z-index: 0;
+}
+.command-area.active{
+    left: 0%;
+    max-height: 100%;
+}
+.command-area::-webkit-scrollbar{
+    width: 1px;
+}
+.command-area h3{
+    text-align: center;
+}
+.command-area ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.command-area h3{
+    margin: 0.4rem 0rem;
+    position: sticky;
+    background: #fff;
+    top: -6%;
+    padding: 0.5rem;
+}
+.command-area ul li{
+    padding: .3rem;
+    border: 1px solid #eee;
+    font-size: .9rem;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+}
+.command-area ul li:hover{
+    background: #f8f8f8;
+}
+
+
+@media (max-width: 768px) {
+    body{
+        flex-direction: column;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .command-area{
+        width: 100%;
+    }
+    .wrapper{
+        width: 100%;
+    }
+
+}
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexa </title>
+    <!-- link for favicon  -->
+    <link rel="shortcut icon" href="https://img.icons8.com/ios-filled/50/ffffff/microphone--v1.png" type="image/x-icon">
+    <!-- link for icons  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- link for custom css  -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+    <!-- header part start here  -->
+    <header id="header"></header>
+    <!-- header part end here  -->
+
+    <!-- main part start here  -->
+    <main id="main">
+        <div class="wrapper">
+            <div class="command-area">
+                <h3>Supported Command</h3>
+                <ul>
+
+                </ul>
+            </div>
+            <button id="question-btn" title="Supported Command"><i class="bi bi-question"></i></button>
+            <h3>Virtual Assistant</h3>
+            <button id="microphone"  class=""><i class="bi bi-mic"></i></button>
+            <div class="display-conversation">
+                <p><b>Your Voice:</b> <br> <span id="voiceText">Hello route how are you doing?</span></p>
+                <p><b>Alexa:</b> <br> <span id="alexText">Yeah! I am good! what's about you?</span></p>
+            </div>
+        </div>
+    </main>
+    <!-- main part end here  -->
+
+    <!-- footer part start here  -->
+    <footer id="footer"></footer>
+    <!-- footer part end here  -->
+
+
+
+    <!-- script for js  -->
+<!--    <script src="./assets/js/app.js"></script>-->
+
+
+
+
+<!--++++++++++++++++++++++++++++++++++ Javascript +++++++++++++++++++++-->
+
+<script>
+
+    /*
+TODO:
+- select all of important elements
+- grab all of element from Speech web api
+- Alexa response function here
+- toggle show command area
+*/
+
+/* STEP: 1 select all of important elements  */
+const microphoneBtn = document.getElementById('microphone');
+const voiceText = document.getElementById("voiceText");
+
+/* STEP: 2 grab all of element from Speech web api  */
+const speechRecognition = () => {
+    let recognition = new webkitSpeechRecognition();
+
+    recognition.onstart = () => {
+        microphoneBtn.classList.add('pulse')
+        voiceText.innerHTML = `<small class="text-muted"> listening.... </small>`;
+    }
+    recognition.onend = () => microphoneBtn.classList.remove('pulse');
+    recognition.onerror = () => voiceText.innerHTML = `<small class="text-muted"> Not hear yet. </small>`;
+    recognition.start();
+    recognition.onresult = (event) => {
+        let userVoiceText = event.results[0][0].transcript;
+        voiceText.innerText = userVoiceText;
+
+
+
+
+
+        alexResponse(userVoiceText);
+    }
+}
+
+/* STEP: 3 Alexa response function here  */
+const alexResponse = (text) => {
+    let speech = new SpeechSynthesisUtterance(text);
+    /* Command Put Here*/
+    if (text == 'hai' || text == 'how are you route') {
+        speech.text = 'Yeah! I am good how about you?';
+        successfully_ans()
+    }  else {
+        speech.text = 'Sorry not understood.';
+
+          setTimeout(function(){
+        document.getElementById("microphone").click()
+      }, 2000);
+
+    }
+
+
+    document.getElementById("alexText").innerText = speech.text;
+
+
+<!--    +++++++++++++++++++++++++++-->
+
+
+<!--++++++++++++++++++++++++++++++++-->
+
+    window.speechSynthesis.speak(speech);
+
+
+}
+
+microphoneBtn.addEventListener('click', speechRecognition);
+
+/* STEP: 4 toggle show command area  */
+document.getElementById("question-btn").addEventListener('click', () => {
+    document.querySelector(".command-area").classList.toggle('active');
+})
+
+
+
+function successfully_ans(){
+setTimeout(function(){
+        document.getElementById("microphone").click()
+      }, 2000);
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+
+</html>
